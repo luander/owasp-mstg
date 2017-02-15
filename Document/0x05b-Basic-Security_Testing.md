@@ -27,9 +27,19 @@ https://forum.xda-developers.com/showthread.php?t=2227815
 
 ### Static Analysis
 -- TODO : Description, when it comes compared to dynamic analysis and why, what it can bring --
+Static analysis is the act of looking into App components, source code and other resources without actually executing it. This test is focused on finding misconfigured or unprotected Android IPC components as well as finding programming mistakes such as misuse of cryptography routines, find libraries with known vulnerabilities and even dynamic code loading routines.
+
+When we are performing static analysis of applications, several tools can be used. The most commonly used are Static Analyzers. The most useful ones are Androbugs, Linkedin's qark, Android Lint and the paid HP's Fortify. However there are a plethora of static code analyzers that can be used.
+Some Static Analyzers rely on the availability of the source code while others take the compiled apk as input. 
+I is important to keep in mind that while static analyzers can help us to focus attention on potential problems, they may not be able to find all the problems by itself, go through each finding carefully and try to understand what the app is doing to improve your chances of finding vulnerabilities.
+
+Static Analysis can be divided into two categories, White box and Black box. The first is when the source code is available and the other is when we only have the compiled application or library. We will now go into more details on each category.
 
 #### With Source Code ("White box")
 -- TODO : Description of the methodology, pros and cons (what can be done / not done, related tools, vulnerabilities that can be found) --
+White box testing an app is the act to test an app having the source code available. To accomplish the source code testing, you will want to have a setup similar to the developer. You will need a computer with the Android SDK and an IDE installed. It is also recommended to that you have access to either a physical device or an emulator installed so you can debug the app.
+Once you have the setup done and the source code indexed by and IDE (Android Studio is recommended since it is the current IDE of choice by Google) you can start debugging and searching for interesting parts of code.
+Begin by testing each [Android Component](Document/0x05a-Platform-Overview.md#app-components). Check whether they are exported and enforcing permissions. Android Lint<sup>[5]</sup> can help in the identification of such problems.
 
 #### Without Source Code ("Black box")
 -- TODO : Description of the methodology, pros and cons (what can be done / not done, related tools, vulnerabilities that can be found) --
@@ -69,3 +79,4 @@ There are several downsides when using an emulator. You might not be able to tes
 - [2] Installing Burp's CA Certificate in an Android Device - https://support.portswigger.net/customer/portal/articles/1841102-installing-burp-s-ca-certificate-in-an-android-device
 - [3] Creating an Ad-hoc Wireless Network in OS X - https://support.portswigger.net/customer/portal/articles/1841150-Mobile%20Set-up_Ad-hoc%20network_OSX.html
 - [4] Android Application Security Testing Guide: Part 2 - http://resources.infosecinstitute.com/android-app-sec-test-guide-part-2/#gref
+- [5] Android Lint - https://sites.google.com/a/android.com/tools/tips/lint/
