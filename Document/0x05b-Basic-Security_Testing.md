@@ -37,12 +37,22 @@ Static Analysis can be divided into two categories, White box and Black box. The
 
 #### With Source Code ("White box")
 -- TODO : Description of the methodology, pros and cons (what can be done / not done, related tools, vulnerabilities that can be found) --
-White box testing an app is the act to test an app having the source code available. To accomplish the source code testing, you will want to have a setup similar to the developer. You will need a computer with the Android SDK and an IDE installed. It is also recommended to that you have access to either a physical device or an emulator installed so you can debug the app.
-Once you have the setup done and the source code indexed by and IDE (Android Studio is recommended since it is the current IDE of choice by Google) you can start debugging and searching for interesting parts of code.
-Begin by testing each [Android Component](Document/0x05a-Platform-Overview.md#app-components). Check whether they are exported and enforcing permissions. Android Lint<sup>[5]</sup> can help in the identification of such problems.
+White box testing an app is the act of testing an app with the source code available. To accomplish the source code testing, you will want to have a setup similar to the developer. You will need a computer with the Android SDK and an IDE installed. It is also recommended to that you have access to either a physical device or an emulator installed so you can debug the app.
+Once you have the setup ready and the source code indexed by and IDE (Android Studio is recommended since it is the current IDE of choice by Google) you can start debugging and searching for interesting parts of code.
+Begin by testing each [Android Component](0x05a-Platform-Overview.md#app-components). Check whether they are exported and enforcing permissions. Android Lint<sup>[5]</sup> can help in the identification of such problems.
+Any Android component manipulating sensitive data (contacts, location, images, etc...) should be investigated carefully. 
+Proceed on to testing the libraries the application has embedded, some libraries contain known vulnerabilities and you should check for that. What libraries are the app using? And which version of the libraries are being used? Do they have any known vulnerability?
+Since you have the source code in hand, you can check for crypto mistakes in the implementation. Look for hard coded keys and implementation errors related to cryptography functions. devknox<sup>[6]</sup> can help checking most common cryptographic mistakes since it is embedded to the IDE
+
 
 #### Without Source Code ("Black box")
 -- TODO : Description of the methodology, pros and cons (what can be done / not done, related tools, vulnerabilities that can be found) --
+Black box testing, when compared to White box testing you will not have access to the source code in its original form. Usually you will have the application package in hand (in Android .apk format<sup>[7]</sup>) which can be installed on an Android device or reverse engineered with the goal to retrieve parts of the source code.
+If the application is based solely on Java and does not have any native library (code written in C/C++) the reverse engineering process is relatively easy and recovers almost the entire source code. Applications that contain a native library can still be reverse engineered by require low level knowledge and the process is not automated.
+More details and tools about the Android reverse engineering topic can be found at [Tampering and Reverse Engineering on Android](0x05b-Reverse-Engineering-and-Tampering.md) section.
+Besides reverse engineering, there is a handful of automated tools that perform security analysis on the APK itself searching for vulnerabilities.
+They are, for example, [QARK](https://github.com/linkedin/qark/), [Androbugs](https://github.com/AndroBugs/AndroBugs_Framework) and [JAADAS](https://github.com/flankerhqd/JAADAS).
+
 
 ### Dynamic Analysis
 
@@ -80,3 +90,5 @@ There are several downsides when using an emulator. You might not be able to tes
 - [3] Creating an Ad-hoc Wireless Network in OS X - https://support.portswigger.net/customer/portal/articles/1841150-Mobile%20Set-up_Ad-hoc%20network_OSX.html
 - [4] Android Application Security Testing Guide: Part 2 - http://resources.infosecinstitute.com/android-app-sec-test-guide-part-2/#gref
 - [5] Android Lint - https://sites.google.com/a/android.com/tools/tips/lint/
+- [6] devknox - https://devknox.io/
+- [7] Android application package - https://en.wikipedia.org/wiki/Android_application_package
